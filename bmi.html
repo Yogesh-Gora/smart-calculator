@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMI Calculator - Smart Calculator</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#0f172a;
+    color:white;
+    margin:0;
+}
+
+.container{
+    max-width:520px;
+    margin:60px auto;
+    background:#111827;
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 0 25px rgba(0,0,0,0.6);
+}
+
+h1{text-align:center;margin-bottom:20px;}
+
+label{margin-top:12px;display:block;}
+
+input,select{
+    width:100%;
+    padding:12px;
+    margin-top:6px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:13px;
+    margin-top:18px;
+    background:#16a34a;
+    border:none;
+    color:white;
+    font-size:18px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+button:hover{background:#15803d;}
+
+.result{margin-top:25px;display:none;}
+
+.card{
+    background:#020617;
+    padding:18px;
+    margin-top:12px;
+    border-radius:10px;
+    border:1px solid #1f2937;
+}
+
+.big{font-size:26px;font-weight:bold;color:#22c55e;}
+.small{opacity:0.8;margin-top:5px;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>⚖ BMI Calculator</h1>
+
+<label>Weight (kg)</label>
+<input type="number" id="weight">
+
+<label>Height Unit</label>
+<select id="unit" onchange="toggleHeight()">
+<option value="ft">Feet & Inch</option>
+<option value="cm">Centimeter</option>
+</select>
+
+<div id="ftBox">
+<label>Feet</label>
+<input type="number" id="feet">
+<label>Inch</label>
+<input type="number" id="inch">
+</div>
+
+<div id="cmBox" style="display:none;">
+<label>Height (cm)</label>
+<input type="number" id="cm">
+</div>
+
+<button onclick="calcBMI()">Calculate BMI</button>
+
+<div class="result" id="result">
+
+<div class="card">
+<div class="small">Your BMI</div>
+<div class="big" id="bmi"></div>
+</div>
+
+<div class="card">
+<div class="small">Category</div>
+<div class="big" id="status"></div>
+</div>
+
+<div class="card">
+<div class="small">Ideal BMI Range</div>
+<div class="big">18.5 – 24.9</div>
+</div>
+
+<div class="card">
+<div class="small">Ideal Weight Range</div>
+<div class="big" id="ideal"></div>
+</div>
+
+<div class="card">
+<div id="summary"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+function toggleHeight(){
+let unit=document.getElementById("unit").value;
+document.getElementById("ftBox").style.display=unit=="ft"?"block":"none";
+document.getElementById("cmBox").style.display=unit=="cm"?"block":"none";
+}
+
+function calcBMI(){
+
+let weight=parseFloat(document.getElementById("weight").value);
+let unit=document.getElementById("unit").value;
+let heightM;
+
+if(!weight){alert("Enter weight");return;}
+
+if(unit=="ft"){
+let ft=parseFloat(document.getElementById("feet").value);
+let inch=parseFloat(document.getElementById("inch").value)||0;
+if(!ft){alert("Enter height");return;}
+
+let totalInch=ft*12+inch;
+let cm=totalInch*2.54;
+heightM=cm/100;
+}
+else{
+let cm=parseFloat(document.getElementById("cm").value);
+if(!cm){alert("Enter height");return;}
+heightM=cm/100;
+}
+
+let bmi=weight/(heightM*heightM);
+let category="";
+
+if(bmi<18.5) category="Underweight";
+else if(bmi<25) category="Normal";
+else if(bmi<30) category="Overweight";
+else category="Obese";
+
+/* ideal weight range */
+let minW=18.5*(heightM*heightM);
+let maxW=24.9*(heightM*heightM);
+
+document.getElementById("result").style.display="block";
+
+document.getElementById("bmi").innerHTML=bmi.toFixed(1);
+document.getElementById("status").innerHTML=category;
+
+document.getElementById("ideal").innerHTML=
+Math.round(minW)+" kg - "+Math.round(maxW)+" kg";
+
+document.getElementById("summary").innerHTML=
+`<b>Details:</b><br>
+Weight: ${weight} kg<br>
+BMI: ${bmi.toFixed(1)}<br>
+Healthy BMI: 18.5 - 24.9`;
+}
+</script>
+
+</body>
+</html>

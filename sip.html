@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIP Calculator</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{
+    font-family: Arial;
+    background:#0f172a;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+.container{
+    background:#111827;
+    padding:25px;
+    border-radius:15px;
+    width:420px;
+}
+input,button{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border-radius:8px;
+    border:none;
+}
+input{
+    background:#1f2937;
+    color:white;
+}
+button{
+    background:#22c55e;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+.result{
+    margin-top:15px;
+    background:#020617;
+    padding:15px;
+    border-radius:10px;
+}
+canvas{
+    margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>SIP Calculator</h2>
+
+<input type="number" id="monthly" placeholder="Monthly Investment ₹">
+<input type="number" id="rate" placeholder="Interest Rate % (Yearly)">
+<input type="number" id="years" placeholder="Time (Years)">
+
+<button onclick="calc()">Calculate SIP</button>
+
+<div class="result" id="output">
+Enter values and click calculate
+</div>
+
+<canvas id="chart"></canvas>
+
+</div>
+
+<script>
+let chart;
+
+function format(x){
+ return Math.round(x).toLocaleString("en-IN");
+}
+
+function calc(){
+
+let P = Number(document.getElementById("monthly").value);
+let r = Number(document.getElementById("rate").value)/100/12;
+let n = Number(document.getElementById("years").value)*12;
+
+if(!P || !r || !n){
+ document.getElementById("output").innerHTML="Please fill all fields";
+ return;
+}
+
+let future = P*((Math.pow(1+r,n)-1)/r)*(1+r);
+let invested = P*n;
+let profit = future - invested;
+
+document.getElementById("output").innerHTML=
+`Total Invested: ₹ ${format(invested)} <br>
+ Returns: ₹ ${format(profit)} <br>
+ <b>Total Value: ₹ ${format(future)}</b>`;
+
+let labels=[];
+let values=[];
+let total=0;
+
+for(let i=1;i<=n;i++){
+ total = total*(1+r)+P;
+ labels.push(i);
+ values.push(total);
+}
+
+if(chart) chart.destroy();
+
+chart = new Chart(document.getElementById("chart"),{
+type:"line",
+data:{
+labels:labels,
+datasets:[{
+label:"Growth",
+data:values,
+fill:true,
+tension:0.3
+}]
+},
+options:{
+plugins:{legend:{display:false}}
+}
+});
+
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age Calculator - Smart Calculator</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#0f172a;
+    color:white;
+    margin:0;
+    padding:0;
+}
+
+.container{
+    max-width:500px;
+    margin:60px auto;
+    background:#111827;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 0 20px rgba(0,0,0,0.5);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    background:#16a34a;
+    border:none;
+    color:white;
+    font-size:18px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#15803d;
+}
+
+.result{
+    margin-top:25px;
+    background:#020617;
+    padding:20px;
+    border-radius:10px;
+}
+
+.box{
+    margin-top:10px;
+    padding:12px;
+    background:#020617;
+    border:1px solid #1f2937;
+    border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🎂 Age Calculator</h1>
+
+    <label>Select your birth date</label>
+    <input type="date" id="dob">
+
+    <button onclick="calcAge()">Calculate Age</button>
+
+    <div class="result" id="result" style="display:none;">
+        <div class="box" id="ageText"></div>
+        <div class="box" id="daysText"></div>
+        <div class="box" id="birthdayText"></div>
+    </div>
+</div>
+
+<script>
+function calcAge(){
+    const dobInput = document.getElementById("dob").value;
+    if(!dobInput){
+        alert("Enter birth date");
+        return;
+    }
+
+    const dob = new Date(dobInput);
+    const today = new Date();
+
+    let years = today.getFullYear() - dob.getFullYear();
+    let months = today.getMonth() - dob.getMonth();
+    let days = today.getDate() - dob.getDate();
+
+    if(days < 0){
+        months--;
+        const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        days += prevMonth.getDate();
+    }
+
+    if(months < 0){
+        years--;
+        months += 12;
+    }
+
+    // total days lived
+    const diff = today - dob;
+    const totalDays = Math.floor(diff / (1000*60*60*24));
+
+    // next birthday
+    let nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+    if(nextBirthday < today){
+        nextBirthday.setFullYear(today.getFullYear()+1);
+    }
+
+    const bDiff = nextBirthday - today;
+    const bDays = Math.floor(bDiff/(1000*60*60*24));
+    const bMonths = Math.floor(bDays/30);
+    const bRemainDays = bDays % 30;
+
+    document.getElementById("result").style.display="block";
+
+    document.getElementById("ageText").innerHTML =
+        `<b>Your Age:</b> ${years} Years ${months} Months ${days} Days`;
+
+    document.getElementById("daysText").innerHTML =
+        `<b>Total Days Lived:</b> ${totalDays} days`;
+
+    document.getElementById("birthdayText").innerHTML =
+        `<b>Next Birthday In:</b> ${bMonths} Months ${bRemainDays} Days`;
+}
+</script>
+
+</body>
+</html>

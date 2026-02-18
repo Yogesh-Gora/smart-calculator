@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMI Calculator - Smart Calculator</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#0f172a;
+    color:white;
+    margin:0;
+}
+
+.container{
+    max-width:560px;
+    margin:50px auto;
+    background:#111827;
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 0 25px rgba(0,0,0,0.6);
+}
+
+h1{text-align:center;margin-bottom:20px;}
+
+label{margin-top:12px;display:block;}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:6px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:13px;
+    margin-top:18px;
+    background:#16a34a;
+    border:none;
+    color:white;
+    font-size:18px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.result{margin-top:25px;display:none;}
+
+.card{
+    background:#020617;
+    padding:18px;
+    margin-top:12px;
+    border-radius:10px;
+    border:1px solid #1f2937;
+}
+
+.big{font-size:24px;font-weight:bold;color:#22c55e;}
+.small{opacity:0.8;margin-top:5px;}
+
+canvas{
+    margin-top:25px;
+    background:#020617;
+    padding:15px;
+    border-radius:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>🏦 EMI Calculator</h1>
+
+<label>Loan Amount (₹)</label>
+<input type="number" id="loan">
+
+<label>Interest Rate (%)</label>
+<input type="number" id="rate">
+
+<label>Loan Time (Years)</label>
+<input type="number" id="years">
+
+<button onclick="calcEMI()">Calculate EMI</button>
+
+<div class="result" id="result">
+
+<div class="card">
+<div class="small">Monthly EMI</div>
+<div class="big" id="emi"></div>
+</div>
+
+<div class="card">
+<div class="small">Total Interest</div>
+<div class="big" id="interest"></div>
+</div>
+
+<div class="card">
+<div class="small">Total Payment</div>
+<div class="big" id="total"></div>
+</div>
+
+<canvas id="chart"></canvas>
+
+</div>
+</div>
+
+<script>
+let chart;
+
+function calcEMI(){
+
+let P=parseFloat(document.getElementById("loan").value);
+let rate=parseFloat(document.getElementById("rate").value);
+let years=parseFloat(document.getElementById("years").value);
+
+if(!P||!rate||!years){
+    alert("Fill all fields");
+    return;
+}
+
+let r=rate/12/100;
+let n=years*12;
+
+let emi=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+let total=emi*n;
+let interest=total-P;
+
+document.getElementById("result").style.display="block";
+
+document.getElementById("emi").innerHTML=
+"₹ "+Math.round(emi).toLocaleString("en-IN");
+
+document.getElementById("interest").innerHTML=
+"₹ "+Math.round(interest).toLocaleString("en-IN");
+
+document.getElementById("total").innerHTML=
+"₹ "+Math.round(total).toLocaleString("en-IN");
+
+/* chart */
+let ctx=document.getElementById("chart");
+
+if(chart){ chart.destroy(); }
+
+chart=new Chart(ctx,{
+type:"pie",
+data:{
+labels:["Principal","Interest"],
+datasets:[{
+data:[P,interest],
+backgroundColor:["#22c55e","#ef4444"]
+}]
+}
+});
+}
+</script>
+
+</body>
+</html>
