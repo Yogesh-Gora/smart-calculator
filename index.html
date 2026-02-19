@@ -1,173 +1,270 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Calculator</title>
 
-<link rel="icon" href="logo.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4141608839370729"
+     crossorigin="anonymous"></script>
+
+<title>Smart Calculator 365 - EMI, SIP, FD, BMI & More</title>
+<meta name="description" content="Free online EMI, SIP, FD, Interest, BMI and Age calculators. Easy, fast and accurate tools.">
+
+<link rel="icon" type="image/png" href="logo.png">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
 body{
-    margin:0;
-    font-family:Arial;
-    background:#020617;
-    color:white;
+    font-family:'Segoe UI',sans-serif;
+    background:#f4f6f9;
 }
 
-/* HEADER */
-.header{
-    background:#020617;
-    padding:20px 30px;
+/* NAVBAR */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+    background:#ffffff;
+    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo-area{
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    border-bottom:1px solid #1f2937;
 }
 
-.logo img{
-    height:75px;
+.logo-area img{
+    width:40px;
+    margin-right:10px;
 }
 
-.menu{
-    font-size:14px;
-    color:#9ca3af;
+.logo-area span{
+    font-weight:600;
+    font-size:18px;
+}
+
+.nav-links a{
+    margin-left:20px;
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#1e88e5;
 }
 
 /* HERO */
 .hero{
+    background:linear-gradient(135deg,#1e88e5,#43a047);
+    color:white;
     text-align:center;
-    padding:40px 20px;
+    padding:80px 20px;
 }
+
 .hero h1{
-    font-size:32px;
+    font-size:42px;
 }
+
 .hero p{
-    color:#9ca3af;
-    margin-top:10px;
+    margin-top:15px;
+    font-size:18px;
+    opacity:0.9;
+}
+
+.hero button{
+    margin-top:25px;
+    padding:14px 28px;
+    border:none;
+    border-radius:6px;
+    background:white;
+    color:#1e88e5;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.hero button:hover{
+    background:#e3f2fd;
+}
+
+/* AD SPACE */
+.ad-space{
+    margin:40px auto;
+    max-width:1000px;
+    min-height:90px;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.05);
+    color:#aaa;
 }
 
 /* GRID */
+.container{
+    max-width:1200px;
+    margin:50px auto;
+    padding:0 20px;
+}
+
 .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
-    padding:20px;
-    max-width:1000px;
-    margin:auto;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:30px;
 }
 
-/* CARD */
 .card{
-    background:#0f172a;
-    padding:25px;
-    border-radius:15px;
+    background:white;
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
     text-align:center;
-    cursor:pointer;
     transition:0.3s;
-    border:1px solid #1f2937;
 }
+
 .card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 10px 30px rgba(0,0,0,0.6);
+    transform:translateY(-8px);
 }
+
 .card h3{
-    margin:10px 0;
+    margin-bottom:10px;
 }
+
 .card p{
-    font-size:13px;
-    color:#9ca3af;
+    font-size:14px;
+    color:#666;
 }
 
-.icon{
-    font-size:40px;
+.card a{
+    display:inline-block;
+    margin-top:15px;
+    padding:10px 20px;
+    background:#1e88e5;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
 }
 
-/* ADS */
-.ad{
-    margin:30px auto;
-    background:#111827;
-    border:1px dashed #374151;
-    padding:25px;
-    text-align:center;
-    width:90%;
-    max-width:900px;
-    border-radius:12px;
-    color:#9ca3af;
+.card a:hover{
+    background:#1565c0;
 }
 
 /* FOOTER */
-.footer{
+footer{
+    background:#111;
+    color:white;
+    padding:40px 20px;
     text-align:center;
-    padding:25px;
-    color:#6b7280;
-    font-size:13px;
-    margin-top:30px;
+}
+
+footer a{
+    color:#1e88e5;
+    text-decoration:none;
+    margin:0 10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-    <div class="logo">
-        <img src="logo.png">
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo-area">
+        <img src="logo.png" alt="Logo">
+        <span>Smart Calculator 365</span>
     </div>
-    <div class="menu">Smart Tools</div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </div>
 </div>
 
+<!-- HERO -->
 <div class="hero">
-    <h1>Smart Calculator Tools</h1>
-    <p>Fast, accurate & powerful online calculators for everyday use</p>
+    <h1>All-in-One Smart Online Calculators</h1>
+    <p>Fast, Accurate & Free Financial and Health Calculators</p>
+    <button onclick="window.scrollTo({top:700,behavior:'smooth'})">
+        Explore Calculators
+    </button>
 </div>
+
+<!-- TOP AD -->
+<div class="ad-space">
+    <!-- 🔥 Top AdSense Code Here -->
+    Top Advertisement Space
+</div>
+
+<div class="container">
 
 <div class="grid">
 
-<div class="card" onclick="openPage('age.html')">
-<div class="icon">🎂</div>
-<h3>Age Calculator</h3>
-<p>Exact age with months & days</p>
-</div>
-
-<div class="card" onclick="openPage('emi.html')">
-<div class="icon">🏦</div>
+<div class="card">
 <h3>EMI Calculator</h3>
-<p>Loan EMI + interest chart</p>
+<p>Calculate home, car and personal loan EMI instantly.</p>
+<a href="emi.html">Open</a>
 </div>
 
-<div class="card" onclick="openPage('sip.html')">
-<div class="icon">📈</div>
+<div class="card">
 <h3>SIP Calculator</h3>
-<p>Investment growth chart</p>
+<p>Estimate mutual fund investment returns easily.</p>
+<a href="sip.html">Open</a>
 </div>
 
-<div class="card" onclick="openPage('bmi.html')">
-<div class="icon">⚖</div>
-<h3>BMI Calculator</h3>
-<p>Check healthy weight</p>
+<div class="card">
+<h3>FD Calculator</h3>
+<p>Check fixed deposit maturity and interest earned.</p>
+<a href="fd.html">Open</a>
 </div>
 
-<div class="card" onclick="openPage('interest.html')">
-<div class="icon">💰</div>
+<div class="card">
 <h3>Interest Calculator</h3>
-<p>Simple & Compound interest</p>
+<p>Simple and compound interest calculator.</p>
+<a href="interest.html">Open</a>
+</div>
+
+<div class="card">
+<h3>BMI Calculator</h3>
+<p>Measure your body mass index instantly.</p>
+<a href="bmi.html">Open</a>
+</div>
+
+<div class="card">
+<h3>Age Calculator</h3>
+<p>Find your exact age and next birthday countdown.</p>
+<a href="age.html">Open</a>
 </div>
 
 </div>
 
-<div class="ad">
-Ad Space (Google AdSense)
 </div>
 
-<div class="footer">
-© 2026 Smart Calculator • All rights reserved
+<!-- MIDDLE AD -->
+<div class="ad-space">
+    <!-- 🔥 Middle AdSense Code Here -->
+    Middle Advertisement Space
 </div>
 
-<script>
-function openPage(page){
- window.location.href = page;
-}
-</script>
+<footer>
+<p>© Smart Calculator 365</p>
+<br>
+<a href="privacy-policy.html">Privacy Policy</a> |
+<a href="disclaimer.html">Disclaimer</a> |
+<a href="about.html">About</a> |
+<a href="contact.html">Contact</a>
+</footer>
+
+<!-- BOTTOM AD -->
+<div class="ad-space">
+    <!-- 🔥 Bottom AdSense Code Here -->
+    Bottom Advertisement Space
+</div>
 
 </body>
 </html>
