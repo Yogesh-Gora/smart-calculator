@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FD Calculator - Fixed Deposit Maturity Calculator Online</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#f4f6f9;
+}
+
+header{
+    background:linear-gradient(135deg,#2196F3,#4CAF50);
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+.container{
+    max-width:700px;
+    margin:30px auto;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+}
+
+.input-group{
+    margin-bottom:15px;
+}
+
+label{
+    font-weight:bold;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#2196F3;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1976D2;
+}
+
+.result{
+    margin-top:20px;
+    background:#f1f1f1;
+    padding:15px;
+    border-radius:8px;
+}
+
+canvas{
+    margin-top:20px;
+}
+
+footer{
+    text-align:center;
+    padding:15px;
+    margin-top:30px;
+    background:#333;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>FD Calculator</h1>
+    <p>Calculate Fixed Deposit Maturity & Interest Online</p>
+</header>
+
+<div class="container">
+
+    <div class="input-group">
+        <label>Deposit Amount (₹)</label>
+        <input type="number" id="principal" placeholder="Enter deposit amount">
+    </div>
+
+    <div class="input-group">
+        <label>Annual Interest Rate (%)</label>
+        <input type="number" id="rate" placeholder="Enter interest rate">
+    </div>
+
+    <div class="input-group">
+        <label>Tenure (Years)</label>
+        <input type="number" id="years" placeholder="Years">
+    </div>
+
+    <div class="input-group">
+        <label>Additional Months</label>
+        <input type="number" id="months" placeholder="Months">
+    </div>
+
+    <div class="input-group">
+        <label>Compounding Frequency</label>
+        <select id="frequency">
+            <option value="1">Yearly</option>
+            <option value="2">Half-Yearly</option>
+            <option value="4">Quarterly</option>
+            <option value="12">Monthly</option>
+        </select>
+    </div>
+
+    <button onclick="calculateFD()">Calculate FD</button>
+
+    <div class="result" id="result" style="display:none;">
+        <p><strong>Total Investment:</strong> ₹ <span id="investment"></span></p>
+        <p><strong>Total Interest Earned:</strong> ₹ <span id="interest"></span></p>
+        <p><strong>Maturity Amount:</strong> ₹ <span id="maturity"></span></p>
+    </div>
+
+    <canvas id="fdChart"></canvas>
+
+</div>
+
+<footer>
+© 2026 Smart Calculator 365
+</footer>
+
+<script>
+
+let chart;
+
+function formatNumber(num){
+    return num.toLocaleString('en-IN',{maximumFractionDigits:0});
+}
+
+function calculateFD(){
+
+    let P = parseFloat(document.getElementById("principal").value);
+    let R = parseFloat(document.getElementById("rate").value)/100;
+    let years = parseFloat(document.getElementById("years").value) || 0;
+    let months = parseFloat(document.getElementById("months").value) || 0;
+    let n = parseFloat(document.getElementById("frequency").value);
+
+    if(!P || !R || (years===0 && months===0)){
+        alert("Please fill all fields correctly.");
+        return;
+    }
+
+    let T = years + (months/12);
+
+    let maturity = P * Math.pow((1 + R/n),(n*T));
+    let interest = maturity - P;
+
+    document.getElementById("investment").innerText = formatNumber(Math.round(P));
+    document.getElementById("interest").innerText = formatNumber(Math.round(interest));
+    document.getElementById("maturity").innerText = formatNumber(Math.round(maturity));
+
+    document.getElementById("result").style.display="block";
+
+    if(chart){
+        chart.destroy();
+    }
+
+    let ctx = document.getElementById("fdChart").getContext("2d");
+
+    chart = new Chart(ctx,{
+        type:'pie',
+        data:{
+            labels:['Principal','Interest'],
+            datasets:[{
+                data:[P,interest],
+                backgroundColor:['#2196F3','#4CAF50']
+            }]
+        }
+    });
+
+}
+
+</script>
+
+</body>
+</html>
